@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-public class DemoController {
+public class DemoController { // this class has one end point to check authentication
 
 
     @GetMapping("/demo")

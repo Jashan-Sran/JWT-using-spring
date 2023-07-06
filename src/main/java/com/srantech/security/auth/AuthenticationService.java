@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationService {
+public class AuthenticationService { // this class has register and authenticate methods for registering and verifying user
 
     private final UserRepo userRepo;
 
@@ -31,6 +31,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
 
+//        here we are creating user using Register Request class
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -47,6 +48,7 @@ public class AuthenticationService {
                 .build();
     }
 
+//    here we are authenticating registered user
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
         authenticationManager.authenticate(
@@ -55,7 +57,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-
+// if user is valid this will return token
         var user = userRepo.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.

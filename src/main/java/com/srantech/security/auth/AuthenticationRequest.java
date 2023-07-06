@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class AuthenticationRequest {
+public class AuthenticationRequest { // this class has user attribute for verifying registered  user
 
     private String email;
 

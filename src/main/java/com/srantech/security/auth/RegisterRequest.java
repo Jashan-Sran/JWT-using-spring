@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class RegisterRequest {
+public class RegisterRequest { // this class is for registering user for the first time
 
     private String firstName;
 

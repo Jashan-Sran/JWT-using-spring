@@ -15,7 +15,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SpringSecurityConfig {
+public class SpringSecurityConfig { // this is the class where I secured my end points using filter chain
+
+//    inject other classes
 
     private final AuthenticationProvider authenticationProvider;
 
@@ -27,6 +29,8 @@ public class SpringSecurityConfig {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthFilter = jwtAuthFilter;
     }
+
+//    spring security filter chain method
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

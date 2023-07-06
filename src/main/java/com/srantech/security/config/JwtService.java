@@ -17,10 +17,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JwtService {
+public class JwtService { // Jwt service class created from extracting user from token
 
     private static final String SECRET_KEY = "5A7134743777397A24432646294A404E635266556A586E3272357538782F4125";
 
+//    extracting username from token
     public String extractUsername(String token) {
 
         return extractClaim(token,Claims::getSubject);
@@ -36,7 +37,7 @@ public class JwtService {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
-
+// this method is for checking is token expired or not
     private boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
@@ -60,25 +61,28 @@ public class JwtService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 *60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
+                .compact(); // compact method  generate and return token
     }
 
+//    this method is for extracting every claim from token
     public <T> T extractClaim(String token, Function<Claims,T> claimsResolver){
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
+//    this method is for extracting all claims from token
     public Claims extractAllClaims(String token){
 
         return Jwts
                 .parserBuilder()
-                .setSigningKey(getSignInKey())
+                .setSigningKey(getSignInKey()) // sign in key for generating and decode the token
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
 
     }
 
+//    implementing getSignIn method
     public Key getSignInKey(){
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);

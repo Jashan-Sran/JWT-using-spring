@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class ApplicationConfig {
+public class ApplicationConfig { // this class will hold all the configurations, beans
 
     private final UserRepo userRepo;
 
@@ -24,6 +24,7 @@ public class ApplicationConfig {
         this.userRepo = userRepo;
     }
 
+//    this bean is for fetching data from DB
     @Bean
     public UserDetailsService userDetailsService(){
 
@@ -31,6 +32,7 @@ public class ApplicationConfig {
                 .orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
 
+//    this bean is responsible for fetching data and decoding password
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -39,11 +41,13 @@ public class ApplicationConfig {
         return daoAuthenticationProvider;
     }
 
+//    this bean for encoding password
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
+//    this bean is responsible for managing authentication
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
